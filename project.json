@@ -1,0 +1,13 @@
+{
+    "id": "cglm",
+    "type": "package",
+    "value": {
+        "author": "Recep Aslantas",
+        "license": "MIT"
+    },
+    "lang.c": {
+        "${os windows}": {
+            "defines": ["_WINDOWS", "_USRDLL", "CGLM_EXPORTS", "CGLM_DLL"]
+        }
+    }
+}
