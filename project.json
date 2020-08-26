@@ -8,6 +8,9 @@
     "lang.c": {
         "${os windows}": {
             "defines": ["_WINDOWS", "_USRDLL", "CGLM_EXPORTS", "CGLM_DLL"]
+        },
+        "${os linux}": {
+            "lib": ["m"]
         }
     }
 }
