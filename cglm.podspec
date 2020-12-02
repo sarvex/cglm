@@ -2,10 +2,10 @@ Pod::Spec.new do |s|
 
   # Description
   s.name         = "cglm"
-  s.version      = "0.7.2"
-  s.summary      = "📽 Optimized OpenGL/Graphics Math (glm) for C"
+  s.version      = "0.7.9"
+  s.summary      = "📽 Highly Optimized Graphics Math (glm) for C"
   s.description  = <<-DESC
-cglm is math library for graphics programming for C. It is similar to original glm but it is written for C instead of C++ (you can use here too). See the documentation or README for all features.
+cglm is math library for graphics programming for C. See the documentation or README for all features.
                    DESC
 
   s.documentation_url = "http://cglm.readthedocs.io"
@@ -25,4 +25,13 @@ cglm is math library for graphics programming for C. It is similar to original g
 
   # Linking
   s.library = "m"
+
+  # Configuration
+  s.pod_target_xcconfig = {
+    'CLANG_ENABLE_MODULES' => 'NO',
+    'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
+    'CLANG_WARN_DOCUMENTATION_COMMENTS' => 'NO',
+    'GCC_C_LANGUAGE_STANDARD' => 'gnu11',
+    'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) GLM_TESTS_NO_COLORFUL_OUTPUT'
+  }
 end

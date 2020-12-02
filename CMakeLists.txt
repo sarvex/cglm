@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8.2)
-project(cglm VERSION 0.7.6 LANGUAGES C)
+project(cglm VERSION 0.8.0 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED YES)
@@ -22,8 +22,16 @@ if(CGLM_USE_C99)
 endif()
 
 if(MSVC)
-	add_definitions(-DNDEBUG -D_WINDOWS -D_USRDLL -DCGLM_EXPORTS -DCGLM_DLL)
-	add_compile_options(/W3 /Ox /Gy /Oi /TC)
+  add_definitions(-DNDEBUG -D_WINDOWS -D_USRDLL)
+  add_compile_options(/W3 /Ox /Gy /Oi /TC)
+  
+  # Ref: https://skia.googlesource.com/third_party/sdl/+/refs/heads/master/CMakeLists.txt#225
+  # Make sure /RTC1 is disabled, otherwise it will use functions from the CRT
+  foreach(flag_var
+      CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
+      CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO)
+    string(REGEX REPLACE "/RTC(su|[1su])" "" ${flag_var} "${${flag_var}}")
+  endforeach(flag_var)
 else()
   add_compile_options(-Wall -Werror -O3)
 endif()
@@ -64,7 +72,14 @@ add_library(${PROJECT_NAME}
   src/curve.c
   src/bezier.c
   src/ray.c
+  src/affine2d.c
   )
+
+if(CGLM_SHARED)
+  add_definitions(-DCGLM_EXPORTS)
+else()
+  target_compile_definitions(${PROJECT_NAME} PUBLIC -DCGLM_STATIC)
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
                               VERSION ${PROJECT_VERSION} 

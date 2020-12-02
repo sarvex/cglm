@@ -21,7 +21,10 @@ checkLDFLAGS = -L./.libs \
                -lm \
                -lcglm
 checkCFLAGS = $(AM_CFLAGS) \
-              -I./include
+               -std=gnu11 \
+               -O3 \
+               -DCGLM_DEFINE_PRINTS \
+               -I./include
 
 check_PROGRAMS = test/tests
 TESTS = $(check_PROGRAMS)
@@ -63,7 +66,8 @@ cglm_HEADERS = include/cglm/version.h \
                include/cglm/curve.h \
                include/cglm/bezier.h \
                include/cglm/applesimd.h \
-               include/cglm/ray.h
+               include/cglm/ray.h \
+               include/cglm/affine2d.h
 
 cglm_calldir=$(includedir)/cglm/call
 cglm_call_HEADERS = include/cglm/call/mat4.h \
@@ -85,7 +89,8 @@ cglm_call_HEADERS = include/cglm/call/mat4.h \
                     include/cglm/call/ease.h \
                     include/cglm/call/curve.h \
                     include/cglm/call/bezier.h \
-                    include/cglm/call/ray.h
+                    include/cglm/call/ray.h \
+                    include/cglm/call/affine2d.h
 
 cglm_simddir=$(includedir)/cglm/simd
 cglm_simd_HEADERS = include/cglm/simd/intrin.h \
@@ -127,8 +132,9 @@ cglm_struct_HEADERS = include/cglm/struct/mat4.h \
                       include/cglm/struct/project.h \
                       include/cglm/struct/sphere.h \
                       include/cglm/struct/color.h \
-                      include/cglm/struct/curve.h
-
+                      include/cglm/struct/curve.h \
+                      include/cglm/struct/affine2d.h
+                      
 libcglm_la_SOURCES=\
     src/euler.c \
     src/affine.c \
@@ -149,7 +155,8 @@ libcglm_la_SOURCES=\
     src/ease.c \
     src/curve.c \
     src/bezier.c \
-    src/ray.c
+    src/ray.c \
+    src/affine2d.c
 
 test_tests_SOURCES=\
     test/runner.c \

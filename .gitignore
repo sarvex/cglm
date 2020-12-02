@@ -77,3 +77,4 @@ conftest.dir/*
 confdefs.h
 .bake_cache
 bin
+*.xcuserdatad
