@@ -25,6 +25,7 @@ you have the latest version
 - **[new option]** by starting v0.4.5, you can disable alignment requirement, check options in docs.  
 - **[major change]** by starting v0.5.0, vec3 functions use **glm_vec3_** namespace, it was **glm_vec_** until v0.5.0
 - **[major change]** by starting v0.5.1, built-in alignment is removed from **vec3** and **mat3** types
+- **[major change]** by starting v0.7.3, inline print functions are disabled in release/production mode to eliminate print costs (see options in documentation). Print output also improved. You can disable colors if you need  (see documentation)
 
 #### Note for C++ developers:
 If you are not aware of the original GLM library yet, you may also want to look at:
@@ -181,6 +182,67 @@ target_link_libraries(${LIBRARY_NAME} PRIVATE
 add_subdirectory(external/cglm/)
 
 # or you can use find_package to configure cglm
+```
+
+### Meson (All platforms)
+
+```bash
+$ meson build # [Optional] --default-library=static
+$ cd build
+$ ninja
+$ sudo ninja install # [Optional]
+```
+
+##### Meson options with Defaults:
+
+```meson
+c_std=c11
+buildtype=release
+default_library=shared
+enable_tests=false # to run tests: ninja test
+```
+#### Use with your Meson project
+* Example:
+```meson
+# Clone cglm or create a cglm.wrap under <source_root>/subprojects
+project('name', 'c')
+
+cglm_dep = dependency('cglm', fallback : 'cglm', 'cglm_dep')
+
+executable('exe', 'src/main.c', dependencies : cglm_dep)
+```
+
+### Swift (Swift Package Manager)
+
+Currently only default build options are supported. Add **cglm** dependency to your project:
+
+```swift
+...
+Package( 
+  ...
+  dependencies: [
+    ...
+    .package(url: "https://github.com/recp/cglm", .branch("master")),
+  ]
+  ...
+)
+```
+
+Now add **cgml** as a dependency to your target. Product choices are:
+- **cglm** for inlined version of the library which can be linked only statically
+- **cglmc** for a compiled version of the library with no linking limitation
+
+```swift
+...
+.target(
+  ...
+  dependencies: [
+    ...
+    .product(name: "cglm", package: "cglm"),
+  ]
+  ...
+)
+...
 ```
 
 ### Unix (Autotools)
