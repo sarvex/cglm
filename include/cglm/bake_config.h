@@ -23,16 +23,16 @@
 /* Convenience macro for exporting symbols */
 #ifndef cglm_STATIC
 #if cglm_EXPORTS && (defined(_MSC_VER) || defined(__MINGW32__))
-  #define CGLM_EXPORT __declspec(dllexport)
+  #define CGLM_API __declspec(dllexport)
 #elif cglm_EXPORTS
-  #define CGLM_EXPORT __attribute__((__visibility__("default")))
+  #define CGLM_API __attribute__((__visibility__("default")))
 #elif defined _MSC_VER
-  #define CGLM_EXPORT __declspec(dllimport)
+  #define CGLM_API __declspec(dllimport)
 #else
-  #define CGLM_EXPORT
+  #define CGLM_API
 #endif
 #else
-  #define CGLM_EXPORT
+  #define CGLM_API
 #endif
 
 #endif
